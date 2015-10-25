@@ -5,6 +5,7 @@
 package com.chulabhornhospital.employee.form;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import com.jgoodies.forms.factories.*;
@@ -13,15 +14,19 @@ import com.jgoodies.forms.layout.*;
 /**
  * @author Worajedt Sitthidumrong
  */
-public class EmployeeNew extends JFrame {
+public class EmployeeNew extends JDialog {
     public EmployeeNew() {
         initComponents();
+    }
+
+    private void btnBackActionPerformed(ActionEvent e) {
+        this.dispose();
     }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         label1 = new JLabel();
-        button1 = new JButton();
+        btnBack = new JButton();
         label2 = new JLabel();
         textField1 = new JTextField();
         label7 = new JLabel();
@@ -54,6 +59,8 @@ public class EmployeeNew extends JFrame {
 
         //======== this ========
         setMinimumSize(new Dimension(800, 600));
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
         Container contentPane = getContentPane();
         contentPane.setLayout(new FormLayout(
             "2*($ugap), default:grow, $ugap, 3*(16dlu:grow), $ugap, default:grow, $ugap, 3*(16dlu:grow), $ugap, 2*(default:grow), $ugap",
@@ -64,9 +71,11 @@ public class EmployeeNew extends JFrame {
         label1.setFont(new Font("Tahoma", Font.BOLD, 24));
         contentPane.add(label1, CC.xywh(2, 3, 6, 1));
 
-        //---- button1 ----
-        button1.setText("<< Back");
-        contentPane.add(button1, CC.xywh(15, 3, 2, 1));
+        //---- btnBack ----
+        btnBack.setText("<< Back");
+        btnBack.setBackground(new Color(255, 102, 102));
+        btnBack.addActionListener(e -> btnBackActionPerformed(e));
+        contentPane.add(btnBack, CC.xywh(15, 3, 2, 1));
 
         //---- label2 ----
         label2.setText("First Name");
@@ -180,13 +189,13 @@ public class EmployeeNew extends JFrame {
         button4.setBackground(new Color(255, 102, 102));
         contentPane.add(button4, CC.xy(13, 21));
         pack();
-        setLocationRelativeTo(getOwner());
+        setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JLabel label1;
-    private JButton button1;
+    private JButton btnBack;
     private JLabel label2;
     private JTextField textField1;
     private JLabel label7;

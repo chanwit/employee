@@ -3,12 +3,15 @@ JFDML JFormDesigner: "5.2.2.0.199" Java: "1.8.0_40" encoding: "UTF-8"
 new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
-		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
 			"$columnSpecs": "unrelgap, unrelgap, default:grow, unrelgap, 16dlu:grow, 16dlu:grow, 16dlu:grow, unrelgap, default:grow, unrelgap, 16dlu:grow, 16dlu:grow, 16dlu:grow, unrelgap, default:grow, default:grow, unrelgap"
 			"$rowSpecs": "linegap, linegap, default, linegap, 16dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, top:default, linegap, default, linegap, 16dlu, linegap, default, linegap, default"
 		} ) {
 			name: "this"
 			"minimumSize": new java.awt.Dimension( 800, 600 )
+			"defaultCloseOperation": 2
+			"modalityType": enum java.awt.Dialog$ModalityType APPLICATION_MODAL
+			"$locationPolicy": 1
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"
 				"text": "New Employee"
@@ -19,8 +22,10 @@ new FormModel {
 				"gridWidth": 6
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "button1"
+				name: "btnBack"
 				"text": "<< Back"
+				"background": new java.awt.Color( 255, 102, 102, 255 )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnBackActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 15
 				"gridY": 3
