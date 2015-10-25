@@ -64,3 +64,11 @@ dependencies {
     testCompile "org.codehaus.groovy:groovy-all:2.4.1"
     testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
 }
+
+flyway {
+    driver = 'org.h2.Driver'
+    url = 'jdbc:h2:file:./employeeDB'
+    user = 'sa'
+    password = ''
+    locations = ['filesystem:db/migration']
+}
