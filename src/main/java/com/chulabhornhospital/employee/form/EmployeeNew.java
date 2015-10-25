@@ -119,7 +119,7 @@ public class EmployeeNew extends JDialog {
         //---- label8 ----
         label8.setText("DOB");
         contentPane.add(label8, CC.xywh(8, 9, 2, 1, CC.RIGHT, CC.DEFAULT));
-        contentPane.add(textField4, CC.xywh(11, 9, 2, 1));
+        contentPane.add(textField4, CC.xywh(11, 9, 3, 1));
 
         //---- label4 ----
         label4.setText("Department");
