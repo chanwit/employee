@@ -10,6 +10,7 @@ new FormModel {
 			name: "this"
 			"minimumSize": new java.awt.Dimension( 800, 600 )
 			"title": "Employee Directory"
+			"$locationPolicy": 1
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"
 				"text": "Employee Directory"
@@ -74,6 +75,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btnNew"
 				"text": "New Employee"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnNewActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 2
 				"gridY": 11

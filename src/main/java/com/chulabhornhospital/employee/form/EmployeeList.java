@@ -5,6 +5,7 @@
 package com.chulabhornhospital.employee.form;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.*;
 import com.jgoodies.forms.factories.*;
@@ -14,8 +15,16 @@ import com.jgoodies.forms.layout.*;
  * @author Worajedt Sitthidumrong
  */
 public class EmployeeList extends JFrame {
+    private EmployeeNew employeeNew;
+
     public EmployeeList() {
         initComponents();
+    }
+
+    private void btnNewActionPerformed(ActionEvent e) {
+        employeeNew = new EmployeeNew();
+        employeeNew.pack();
+        employeeNew.setVisible(true);
     }
 
     private void initComponents() {
@@ -84,9 +93,10 @@ public class EmployeeList extends JFrame {
 
         //---- btnNew ----
         btnNew.setText("New Employee");
+        btnNew.addActionListener(e -> btnNewActionPerformed(e));
         contentPane.add(btnNew, CC.xywh(2, 11, 2, 1));
         pack();
-        setLocationRelativeTo(getOwner());
+        setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
