@@ -15,16 +15,42 @@ import com.jgoodies.forms.layout.*;
  * @author Worajedt Sitthidumrong
  */
 public class EmployeeList extends JFrame {
+
+    private static final String SEARCH_PLACE_HOLDER = "Search ...";
     private EmployeeNew employeeNew;
 
     public EmployeeList() {
         initComponents();
+        tbEmployee.requestFocus();
     }
 
     private void btnNewActionPerformed(ActionEvent e) {
         employeeNew = new EmployeeNew();
         employeeNew.pack();
         employeeNew.setVisible(true);
+    }
+
+    private void txtSearchKeyPressed(KeyEvent e) {
+        if (e.getKeyChar() == '\n') {
+            e.consume();
+            doSearch(txtSearch.getText());
+        }
+    }
+
+    private void doSearch(String searchQuery) {
+        JOptionPane.showMessageDialog(this, searchQuery);
+    }
+
+    private void txtSearchFocusGained(FocusEvent e) {
+        if(txtSearch.getText().equals(SEARCH_PLACE_HOLDER)) {
+            txtSearch.setText("");
+        }
+    }
+
+    private void txtSearchFocusLost(FocusEvent e) {
+        if(txtSearch.getText().equals("")) {
+            txtSearch.setText(SEARCH_PLACE_HOLDER);
+        }
     }
 
     private void initComponents() {
@@ -50,6 +76,22 @@ public class EmployeeList extends JFrame {
 
         //---- txtSearch ----
         txtSearch.setText("Search ...");
+        txtSearch.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                txtSearchKeyPressed(e);
+            }
+        });
+        txtSearch.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                txtSearchFocusGained(e);
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                txtSearchFocusLost(e);
+            }
+        });
         contentPane.add(txtSearch, CC.xywh(10, 3, 4, 1));
 
         //======== scrollPane1 ========
