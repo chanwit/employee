@@ -35,40 +35,7 @@ new FormModel {
 				name: "scrollPane1"
 				add( new FormComponent( "javax.swing.JTable" ) {
 					name: "tbEmployee"
-					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector {
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( false )
-						} )
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-					}, new java.util.Vector {
-						add( "Name" )
-						add( "Age" )
-						add( "Nick name" )
-						add( "Employ?" )
-					}, new java.util.Vector {
-						add( class java.lang.String )
-						add( class java.lang.Integer )
-						add( class java.lang.String )
-						add( class java.lang.Boolean )
-					}, new java.util.Vector {
-						add( false )
-						add( null )
-						add( null )
-						add( null )
-					}, new java.util.Vector {
-						add( new com.jformdesigner.model.SwingTableColumn( null, 300, 0, 0, true ) )
-						add( new com.jformdesigner.model.SwingTableColumn( null, 0, 0, 50, true ) )
-						add( new com.jformdesigner.model.SwingTableColumn( null, 150, 0, 0, true ) )
-						add( new com.jformdesigner.model.SwingTableColumn( null, 0, 0, 50, true ) )
-					} )
+					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector, new java.util.Vector, new java.util.Vector, new java.util.Vector, new java.util.Vector )
 				} )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 2
@@ -85,8 +52,41 @@ new FormModel {
 				"gridWidth": 2
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 0, 0 )
+			"location": new java.awt.Point( 5, 0 )
 			"size": new java.awt.Dimension( 735, 475 )
+		} )
+		add( new FormNonVisual( "java.util.List" ) {
+			name: "employees"
+			auxiliary() {
+				"JavaCodeGenerator.typeParameters": "com.chulabhornhospital.employee.domain.Employee"
+				"JavaCodeGenerator.variableGetter": true
+			}
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 20, 485 )
+		} )
+		addBindingGroup( new FormBindingGroup( class org.jdesktop.beansbinding.BindingGroup ) {
+			"name": "bindingGroup"
+			addBinding( new FormBinding( "this", "employees", "tbEmployee", "elements" ) {
+				"updateStrategy": enum org.jdesktop.beansbinding.AutoBinding$UpdateStrategy READ
+				"editable": false
+				"subBindings": new com.jformdesigner.model.FormBinding[ new FormBinding( null, "${firstName} ${lastName}", null, null ) {
+					"columnName": "Name"
+					"columnClass": "java.lang.String"
+					"editable": false
+				}, new FormBinding( null, "dob", null, null ) {
+					"columnName": "Date of Birth"
+					"columnClass": "java.util.Date"
+					"editable": false
+				}, new FormBinding( null, "nickName", null, null ) {
+					"columnName": "Nick Name"
+					"columnClass": "java.lang.String"
+					"editable": false
+				}, new FormBinding( null, "beingHired", null, null ) {
+					"columnName": "Being Hired"
+					"columnClass": "java.lang.Boolean"
+					"editable": false
+				} ]
+			} )
 		} )
 	}
 }

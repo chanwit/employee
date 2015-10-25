@@ -6,10 +6,18 @@ package com.chulabhornhospital.employee.form;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.table.*;
+
+import com.chulabhornhospital.employee.controller.EmployeeController;
+import com.chulabhornhospital.employee.domain.Employee;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
+import org.jdesktop.beansbinding.*;
+import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
+import org.jdesktop.swingbinding.*;
 
 /**
  * @author Worajedt Sitthidumrong
@@ -18,9 +26,17 @@ public class EmployeeList extends JFrame {
 
     private static final String SEARCH_PLACE_HOLDER = "Search ...";
     private EmployeeNew employeeNew;
+    private EmployeeController controller;
 
     public EmployeeList() {
         initComponents();
+        controller = new EmployeeController(this);
+        try {
+            controller.listEmployees();
+        } catch (Throwable e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
         tbEmployee.requestFocus();
     }
 
@@ -33,12 +49,12 @@ public class EmployeeList extends JFrame {
     private void txtSearchKeyPressed(KeyEvent e) {
         if (e.getKeyChar() == '\n') {
             e.consume();
-            doSearch(txtSearch.getText());
+            try {
+                controller.search(txtSearch.getText());
+            } catch (Throwable throwable) {
+                JOptionPane.showMessageDialog(this, throwable.getMessage());
+            }
         }
-    }
-
-    private void doSearch(String searchQuery) {
-        JOptionPane.showMessageDialog(this, searchQuery);
     }
 
     private void txtSearchFocusGained(FocusEvent e) {
@@ -51,6 +67,16 @@ public class EmployeeList extends JFrame {
         if(txtSearch.getText().equals("")) {
             txtSearch.setText(SEARCH_PLACE_HOLDER);
         }
+    }
+
+    public void setEmployees(List<Employee> val) {
+        List<Employee> old = this.employees;
+        this.employees = val;
+        firePropertyChange("employees", old, val);
+    }
+
+    public List<com.chulabhornhospital.employee.domain.Employee> getEmployees() {
+        return employees;
     }
 
     private void initComponents() {
@@ -98,37 +124,7 @@ public class EmployeeList extends JFrame {
         {
 
             //---- tbEmployee ----
-            tbEmployee.setModel(new DefaultTableModel(
-                new Object[][] {
-                    {null, null, null, false},
-                    {null, null, null, null},
-                },
-                new String[] {
-                    "Name", "Age", "Nick name", "Employ?"
-                }
-            ) {
-                Class<?>[] columnTypes = new Class<?>[] {
-                    String.class, Integer.class, String.class, Boolean.class
-                };
-                boolean[] columnEditable = new boolean[] {
-                    false, true, true, true
-                };
-                @Override
-                public Class<?> getColumnClass(int columnIndex) {
-                    return columnTypes[columnIndex];
-                }
-                @Override
-                public boolean isCellEditable(int rowIndex, int columnIndex) {
-                    return columnEditable[columnIndex];
-                }
-            });
-            {
-                TableColumnModel cm = tbEmployee.getColumnModel();
-                cm.getColumn(0).setPreferredWidth(300);
-                cm.getColumn(1).setMaxWidth(50);
-                cm.getColumn(2).setPreferredWidth(150);
-                cm.getColumn(3).setMaxWidth(50);
-            }
+            tbEmployee.setModel(new DefaultTableModel());
             scrollPane1.setViewportView(tbEmployee);
         }
         contentPane.add(scrollPane1, CC.xywh(2, 7, 12, 1));
@@ -139,6 +135,32 @@ public class EmployeeList extends JFrame {
         contentPane.add(btnNew, CC.xywh(2, 11, 2, 1));
         pack();
         setLocationRelativeTo(null);
+
+        //---- bindings ----
+        bindingGroup = new BindingGroup();
+        {
+            JTableBinding binding = SwingBindings.createJTableBinding(UpdateStrategy.READ,
+                this, (BeanProperty) BeanProperty.create("employees"), tbEmployee);
+            binding.setEditable(false);
+            binding.addColumnBinding(ELProperty.create("${firstName} ${lastName}"))
+                .setColumnName("Name")
+                .setColumnClass(String.class)
+                .setEditable(false);
+            binding.addColumnBinding(BeanProperty.create("dob"))
+                .setColumnName("Date of Birth")
+                .setColumnClass(Date.class)
+                .setEditable(false);
+            binding.addColumnBinding(BeanProperty.create("nickName"))
+                .setColumnName("Nick Name")
+                .setColumnClass(String.class)
+                .setEditable(false);
+            binding.addColumnBinding(BeanProperty.create("beingHired"))
+                .setColumnName("Being Hired")
+                .setColumnClass(Boolean.class)
+                .setEditable(false);
+            bindingGroup.addBinding(binding);
+        }
+        bindingGroup.bind();
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
@@ -148,5 +170,7 @@ public class EmployeeList extends JFrame {
     private JScrollPane scrollPane1;
     private JTable tbEmployee;
     private JButton btnNew;
+    private List<com.chulabhornhospital.employee.domain.Employee> employees;
+    private BindingGroup bindingGroup;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
