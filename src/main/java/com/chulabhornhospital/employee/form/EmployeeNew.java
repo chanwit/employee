@@ -6,25 +6,43 @@ package com.chulabhornhospital.employee.form;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.*;
+import java.util.*;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.border.*;
+
+import com.chulabhornhospital.employee.controller.EmployeeNewFormController;
 import com.chulabhornhospital.employee.domain.*;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
 import org.jdesktop.beansbinding.*;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
+import org.jdesktop.swingbinding.*;
+import org.jdesktop.swingx.*;
 
 /**
  * @author Worajedt Sitthidumrong
  */
 public class EmployeeNew extends JDialog {
+
+    private final EmployeeNewFormController controller;
+
     public EmployeeNew() {
-        initEmployee();
         initComponents();
+
+        initEmployee();
+        controller = new EmployeeNewFormController(this);
+        try {
+            controller.listDepartments();
+        } catch (Throwable e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
     }
 
     private void initEmployee() {
         Employee emptyEmployee = new Employee();
+        emptyEmployee.setDob(new Date());
         emptyEmployee.setBeingHired(false);
         emptyEmployee.setGender(true);
         setEmployee(emptyEmployee);
@@ -39,9 +57,27 @@ public class EmployeeNew extends JDialog {
     }
 
     public void setEmployee(Employee value) {
-        Employee old = value;
+        Employee old = this.employee;
         this.employee = value;
-        this.firePropertyChange("employee", old, this.employee);
+        firePropertyChange("employee", old, this.employee);
+    }
+
+    private void textField4PropertyChange(PropertyChangeEvent e) {
+        firePropertyChange("employee", null, getEmployee());
+    }
+
+    private void btnSaveActionPerformed(ActionEvent e) {
+        //
+    }
+
+    public List<com.chulabhornhospital.employee.domain.Department> getDepartments() {
+        return departments;
+    }
+
+    public void setDepartments(List<Department> departments) {
+        List<Department> old = this.departments;
+        this.departments = departments;
+        firePropertyChange("departments", old, departments);
     }
 
     private void initComponents() {
@@ -58,7 +94,7 @@ public class EmployeeNew extends JDialog {
         radioButton2 = new JRadioButton();
         radioButton3 = new JRadioButton();
         label8 = new JLabel();
-        textField4 = new JTextField();
+        textField4 = new JXDatePicker();
         label4 = new JLabel();
         comboBox1 = new JComboBox();
         label11 = new JLabel();
@@ -142,6 +178,9 @@ public class EmployeeNew extends JDialog {
         //---- label8 ----
         label8.setText("DOB");
         contentPane.add(label8, CC.xywh(8, 9, 2, 1, CC.RIGHT, CC.DEFAULT));
+
+        //---- textField4 ----
+        textField4.addPropertyChangeListener("date", e -> textField4PropertyChange(e));
         contentPane.add(textField4, CC.xywh(11, 9, 3, 1));
 
         //---- label4 ----
@@ -197,6 +236,7 @@ public class EmployeeNew extends JDialog {
         button2.setMinimumSize(new Dimension(28, 23));
         button2.setPreferredSize(new Dimension(28, 23));
         button2.setBackground(new Color(0, 153, 51));
+        button2.addActionListener(e -> btnSaveActionPerformed(e));
         contentPane.add(button2, CC.xy(5, 21));
 
         //---- button3 ----
@@ -224,15 +264,24 @@ public class EmployeeNew extends JDialog {
 
         //---- bindings ----
         bindingGroup = new BindingGroup();
+        {
+            Binding binding = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE,
+                this, BeanProperty.create("employee.firstName"),
+                textField1, BeanProperty.create("text"));
+            bindingGroup.addBinding(binding);
+            binding.bind();
+        }
         bindingGroup.addBinding(Bindings.createAutoBinding(UpdateStrategy.READ_WRITE,
-            employee, BeanProperty.create("firstName"),
-            textField1, BeanProperty.create("text")));
-        bindingGroup.addBinding(Bindings.createAutoBinding(UpdateStrategy.READ_WRITE,
-            employee, BeanProperty.create("lastName"),
+            this, BeanProperty.create("employee.lastName"),
             textField3, BeanProperty.create("text")));
         bindingGroup.addBinding(Bindings.createAutoBinding(UpdateStrategy.READ_WRITE,
-            employee, BeanProperty.create("gender"),
+            this, BeanProperty.create("employee.gender"),
             radioButton2, BeanProperty.create("selected")));
+        bindingGroup.addBinding(Bindings.createAutoBinding(UpdateStrategy.READ_WRITE,
+            this, BeanProperty.create("employee.dob"),
+            textField4, BeanProperty.create("date")));
+        bindingGroup.addBinding(SwingBindings.createJComboBoxBinding(UpdateStrategy.READ,
+            this, (BeanProperty) BeanProperty.create("departments"), comboBox1));
         bindingGroup.bind();
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
@@ -250,7 +299,7 @@ public class EmployeeNew extends JDialog {
     private JRadioButton radioButton2;
     private JRadioButton radioButton3;
     private JLabel label8;
-    private JTextField textField4;
+    private JXDatePicker textField4;
     private JLabel label4;
     private JComboBox comboBox1;
     private JLabel label11;
@@ -270,6 +319,7 @@ public class EmployeeNew extends JDialog {
     private JButton button3;
     private JButton button4;
     private Employee employee;
+    private List<com.chulabhornhospital.employee.domain.Department> departments;
     private BindingGroup bindingGroup;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
