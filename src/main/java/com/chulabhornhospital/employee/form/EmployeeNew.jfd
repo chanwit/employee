@@ -91,14 +91,17 @@ new FormModel {
 				name: "panel2"
 				add( new FormComponent( "javax.swing.JRadioButton" ) {
 					name: "radioButton2"
-					"text": "text"
+					"text": "Male"
+					"selected": true
+					"$buttonGroup": new FormReference( "buttonGroup1" )
 				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 					"gridX": 1
 					"gridY": 1
 				} )
 				add( new FormComponent( "javax.swing.JRadioButton" ) {
 					name: "radioButton3"
-					"text": "text"
+					"text": "Female"
+					"$buttonGroup": new FormReference( "buttonGroup1" )
 				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 					"gridX": 3
 					"gridY": 1
@@ -268,6 +271,26 @@ new FormModel {
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
 			"size": new java.awt.Dimension( 860, 445 )
+		} )
+		add( new FormNonVisual( "com.chulabhornhospital.employee.domain.Employee" ) {
+			name: "employee"
+			"gender": true
+			auxiliary() {
+				"JavaCodeGenerator.variableGetter": true
+			}
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 45, 450 )
+		} )
+		add( new FormNonVisual( "javax.swing.ButtonGroup" ) {
+			name: "buttonGroup1"
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 502 )
+		} )
+		addBindingGroup( new FormBindingGroup( class org.jdesktop.beansbinding.BindingGroup ) {
+			"name": "bindingGroup"
+			addBinding( new FormBinding( "employee", "firstName", "textField1", "text" ) )
+			addBinding( new FormBinding( "employee", "lastName", "textField3", "text" ) )
+			addBinding( new FormBinding( "employee", "gender", "radioButton2", "selected" ) )
 		} )
 	}
 }

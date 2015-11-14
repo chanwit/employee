@@ -8,19 +8,40 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
+import com.chulabhornhospital.employee.domain.*;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
+import org.jdesktop.beansbinding.*;
+import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 
 /**
  * @author Worajedt Sitthidumrong
  */
 public class EmployeeNew extends JDialog {
     public EmployeeNew() {
+        initEmployee();
         initComponents();
+    }
+
+    private void initEmployee() {
+        Employee emptyEmployee = new Employee();
+        emptyEmployee.setBeingHired(false);
+        emptyEmployee.setGender(true);
+        setEmployee(emptyEmployee);
     }
 
     private void btnBackActionPerformed(ActionEvent e) {
         this.dispose();
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee value) {
+        Employee old = value;
+        this.employee = value;
+        this.firePropertyChange("employee", old, this.employee);
     }
 
     private void initComponents() {
@@ -56,6 +77,7 @@ public class EmployeeNew extends JDialog {
         button2 = new JButton();
         button3 = new JButton();
         button4 = new JButton();
+        employee = new Employee();
 
         //======== this ========
         setMinimumSize(new Dimension(800, 600));
@@ -107,11 +129,12 @@ public class EmployeeNew extends JDialog {
                 "default"));
 
             //---- radioButton2 ----
-            radioButton2.setText("text");
+            radioButton2.setText("Male");
+            radioButton2.setSelected(true);
             panel2.add(radioButton2, CC.xy(1, 1));
 
             //---- radioButton3 ----
-            radioButton3.setText("text");
+            radioButton3.setText("Female");
             panel2.add(radioButton3, CC.xy(3, 1));
         }
         contentPane.add(panel2, CC.xywh(5, 9, 3, 1));
@@ -190,6 +213,27 @@ public class EmployeeNew extends JDialog {
         contentPane.add(button4, CC.xy(13, 21));
         pack();
         setLocationRelativeTo(null);
+
+        //---- employee ----
+        employee.setGender(true);
+
+        //---- buttonGroup1 ----
+        ButtonGroup buttonGroup1 = new ButtonGroup();
+        buttonGroup1.add(radioButton2);
+        buttonGroup1.add(radioButton3);
+
+        //---- bindings ----
+        bindingGroup = new BindingGroup();
+        bindingGroup.addBinding(Bindings.createAutoBinding(UpdateStrategy.READ_WRITE,
+            employee, BeanProperty.create("firstName"),
+            textField1, BeanProperty.create("text")));
+        bindingGroup.addBinding(Bindings.createAutoBinding(UpdateStrategy.READ_WRITE,
+            employee, BeanProperty.create("lastName"),
+            textField3, BeanProperty.create("text")));
+        bindingGroup.addBinding(Bindings.createAutoBinding(UpdateStrategy.READ_WRITE,
+            employee, BeanProperty.create("gender"),
+            radioButton2, BeanProperty.create("selected")));
+        bindingGroup.bind();
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
@@ -225,5 +269,7 @@ public class EmployeeNew extends JDialog {
     private JButton button2;
     private JButton button3;
     private JButton button4;
+    private Employee employee;
+    private BindingGroup bindingGroup;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
