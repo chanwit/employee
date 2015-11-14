@@ -36,7 +36,7 @@ public interface EmployeeMapper {
         "DOB, SALARY, NICK_NAME, ",
         "BEING_HIRED)",
         "values (#{id,jdbcType=BIGINT}, #{firstName,jdbcType=VARCHAR}, ",
-        "#{lastName,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, ",
+        "#{lastName,jdbcType=VARCHAR}, #{gender,jdbcType=BOOLEAN}, ",
         "#{dob,jdbcType=DATE}, #{salary,jdbcType=DECIMAL}, #{nickName,jdbcType=VARCHAR}, ",
         "#{beingHired,jdbcType=BOOLEAN})"
     })
@@ -67,7 +67,7 @@ public interface EmployeeMapper {
         @Result(column="ID", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="FIRST_NAME", property="firstName", jdbcType=JdbcType.VARCHAR),
         @Result(column="LAST_NAME", property="lastName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="GENDER", property="gender", jdbcType=JdbcType.VARCHAR),
+        @Result(column="GENDER", property="gender", jdbcType=JdbcType.BOOLEAN),
         @Result(column="DOB", property="dob", jdbcType=JdbcType.DATE),
         @Result(column="SALARY", property="salary", jdbcType=JdbcType.DECIMAL),
         @Result(column="NICK_NAME", property="nickName", jdbcType=JdbcType.VARCHAR),
@@ -94,7 +94,7 @@ public interface EmployeeMapper {
         "update PUBLIC.EMPLOYEE",
         "set FIRST_NAME = #{firstName,jdbcType=VARCHAR},",
           "LAST_NAME = #{lastName,jdbcType=VARCHAR},",
-          "GENDER = #{gender,jdbcType=VARCHAR},",
+          "GENDER = #{gender,jdbcType=BOOLEAN},",
           "DOB = #{dob,jdbcType=DATE},",
           "SALARY = #{salary,jdbcType=DECIMAL},",
           "NICK_NAME = #{nickName,jdbcType=VARCHAR},",

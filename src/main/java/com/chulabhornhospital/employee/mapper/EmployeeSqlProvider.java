@@ -35,7 +35,7 @@ public class EmployeeSqlProvider {
         }
         
         if (record.getGender() != null) {
-            VALUES("GENDER", "#{gender,jdbcType=VARCHAR}");
+            VALUES("GENDER", "#{gender,jdbcType=BOOLEAN}");
         }
         
         if (record.getDob() != null) {
@@ -76,7 +76,7 @@ public class EmployeeSqlProvider {
         }
         
         if (record.getGender() != null) {
-            SET("GENDER = #{gender,jdbcType=VARCHAR}");
+            SET("GENDER = #{gender,jdbcType=BOOLEAN}");
         }
         
         if (record.getDob() != null) {
