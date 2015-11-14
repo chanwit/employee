@@ -4,22 +4,28 @@
 
 package com.chulabhornhospital.employee.form;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
-import java.util.*;
-import java.util.List;
-import javax.swing.*;
-import javax.swing.border.*;
-
 import com.chulabhornhospital.employee.controller.EmployeeNewFormController;
-import com.chulabhornhospital.employee.domain.*;
-import com.jgoodies.forms.factories.*;
-import com.jgoodies.forms.layout.*;
-import org.jdesktop.beansbinding.*;
+import com.chulabhornhospital.employee.domain.Department;
+import com.chulabhornhospital.employee.domain.Employee;
+import com.jgoodies.forms.factories.CC;
+import com.jgoodies.forms.layout.FormLayout;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
-import org.jdesktop.swingbinding.*;
-import org.jdesktop.swingx.*;
+import org.jdesktop.beansbinding.BeanProperty;
+import org.jdesktop.beansbinding.Binding;
+import org.jdesktop.beansbinding.BindingGroup;
+import org.jdesktop.beansbinding.Bindings;
+import org.jdesktop.swingbinding.SwingBindings;
+import org.jdesktop.swingx.JXDatePicker;
+
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.beans.PropertyChangeEvent;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author Worajedt Sitthidumrong
@@ -41,12 +47,13 @@ public class EmployeeNew extends JDialog {
     }
 
     private void initEmployee() {
-        Employee emptyEmployee = new Employee();
-        emptyEmployee.setDob(new Date());
-        emptyEmployee.setBeingHired(false);
-        emptyEmployee.setGender(true);
-        emptyEmployee.setBeingHired(false);
-        setEmployee(emptyEmployee);
+        Employee newEmployee = new Employee();
+        newEmployee.setDob(new Date());
+        newEmployee.setBeingHired(false);
+        newEmployee.setGender(true);
+        newEmployee.setBeingHired(false);
+        newEmployee.setSalary(new BigDecimal(10000));
+        setEmployee(newEmployee);
     }
 
     private void btnBackActionPerformed(ActionEvent e) {
@@ -68,9 +75,15 @@ public class EmployeeNew extends JDialog {
     }
 
     private void btnSaveActionPerformed(ActionEvent ev) {
-
-        JOptionPane.showMessageDialog(this, employee.getDepartmentId());
-
+        try {
+            if (this.employee.getId() == null) {
+                controller.insert(this.employee);
+            } else {
+                controller.update(this.employee);
+            }
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
     }
 
     public List<com.chulabhornhospital.employee.domain.Department> getDepartments() {
@@ -319,6 +332,9 @@ public class EmployeeNew extends JDialog {
             binding.setSourceUnreadableValue("New Employee");
             bindingGroup.addBinding(binding);
         }
+        bindingGroup.addBinding(Bindings.createAutoBinding(UpdateStrategy.READ_WRITE,
+            this, BeanProperty.create("employee.department"),
+            comboBox1, BeanProperty.create("selectedItem")));
         bindingGroup.bind();
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }

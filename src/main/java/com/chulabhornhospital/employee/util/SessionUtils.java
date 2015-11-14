@@ -39,4 +39,20 @@ public class SessionUtils {
         }
     }
 
+    public static <T> T withUpdate(Call<T> action) throws Throwable {
+        SqlSession session = null;
+        try {
+            session = Main.getFactory().openSession();
+            T result = action.execute(session);
+            session.commit();
+            return result;
+        } catch (Throwable e) {
+            session.rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
+
+
 }

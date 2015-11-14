@@ -324,6 +324,7 @@ new FormModel {
 				"sourceUnreadableValue": "New Employee"
 				"updateStrategy": enum org.jdesktop.beansbinding.AutoBinding$UpdateStrategy READ
 			} )
+			addBinding( new FormBinding( "this", "employee.department", "comboBox1", "selectedItem" ) )
 		} )
 	}
 }

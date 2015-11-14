@@ -30,20 +30,25 @@ public class EmployeeList extends JFrame {
     public EmployeeList() {
         initComponents();
         controller = new EmployeeListFormController(this);
+        refreshData();
+        tbEmployee.removeColumn(tbEmployee.getColumnModel().getColumn(0));
+        tbEmployee.requestFocus();
+    }
+
+    private void refreshData() {
         try {
             controller.listEmployees();
-            tbEmployee.removeColumn(tbEmployee.getColumnModel().getColumn(0));
         } catch (Throwable e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-        tbEmployee.requestFocus();
     }
 
     private void btnNewActionPerformed(ActionEvent e) {
         EmployeeNew newForm = new EmployeeNew();
         newForm.pack();
         newForm.setVisible(true);
+        refreshData();
     }
 
     private void txtSearchKeyPressed(KeyEvent e) {
@@ -90,6 +95,7 @@ public class EmployeeList extends JFrame {
                 newForm.setEmployee(controller.get(id));
                 newForm.pack();
                 newForm.setVisible(true);
+                refreshData();
             } catch (Throwable throwable) {
                 JOptionPane.showMessageDialog(this, throwable.getMessage());
             }
