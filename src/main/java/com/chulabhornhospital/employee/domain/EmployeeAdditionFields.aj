@@ -5,7 +5,10 @@ import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
-public privileged aspect EmployeeAge {
+/**
+ * Created by Administrator on 11/14/2015.
+ */
+public privileged aspect EmployeeAdditionFields {
 
     public String Employee.getAge() {
         DateTime bd = new DateTime(this.getDob());
@@ -17,6 +20,23 @@ public privileged aspect EmployeeAge {
                 .toFormatter();
         String elapsed = formatter.print(period).trim();
         return elapsed;
+    }
+
+    public String Employee.getFullName() {
+        if (this.getFirstName() == null && this.getLastName() == null) {
+            return null;
+        }
+
+        String firstName = this.getFirstName() == null ? "" : this.getFirstName();
+        String lastName = this.getLastName() == null ? "" : this.getLastName();
+
+        return String.format("%s %s", firstName, lastName).trim();
+    }
+
+    public Department Employee.getDepartment() {
+        Department result = new Department();
+        result.setId(this.getDepartmentId());
+        return result;
     }
 
 }
