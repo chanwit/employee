@@ -23,7 +23,7 @@ public class EmployeeNewFormController {
     public void listDepartments() throws Throwable {
         with(session -> {
             DepartmentListMapper dm = session.getMapper(DepartmentListMapper.class);
-            final List<Department> result = dm.list(100L);
+            final List<Department> result = dm.list(20L);
             form.setDepartments(result);
         });
     }

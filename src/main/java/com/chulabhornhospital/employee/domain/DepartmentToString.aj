@@ -6,7 +6,7 @@ package com.chulabhornhospital.employee.domain;
 public privileged aspect DepartmentToString {
 
     public String Department.toString() {
-        return String.format("%s: %s", this.id, this.name);
+        return String.format("%d: %s", this.getId(), this.getName());
     }
 
 

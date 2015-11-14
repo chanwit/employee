@@ -66,8 +66,10 @@ public class EmployeeNew extends JDialog {
         firePropertyChange("employee", null, getEmployee());
     }
 
-    private void btnSaveActionPerformed(ActionEvent e) {
-        //
+    private void btnSaveActionPerformed(ActionEvent ev) {
+
+        JOptionPane.showMessageDialog(this, employee.getDepartmentId());
+
     }
 
     public List<com.chulabhornhospital.employee.domain.Department> getDepartments() {
@@ -77,7 +79,13 @@ public class EmployeeNew extends JDialog {
     public void setDepartments(List<Department> departments) {
         List<Department> old = this.departments;
         this.departments = departments;
-        firePropertyChange("departments", old, departments);
+        firePropertyChange("departments", null, departments);
+    }
+
+    private void departmentItemStateChanged(ItemEvent e) {
+        Department department = (Department) e.getItem();
+        employee.setDepartmentId(department.getId());
+        firePropertyChange("employee", null, employee);
     }
 
     private void initComponents() {
@@ -96,7 +104,7 @@ public class EmployeeNew extends JDialog {
         label8 = new JLabel();
         textField4 = new JXDatePicker();
         label4 = new JLabel();
-        comboBox1 = new JComboBox();
+        comboBox1 = new JComboBox<>();
         label11 = new JLabel();
         label12 = new JLabel();
         label9 = new JLabel();
@@ -186,6 +194,9 @@ public class EmployeeNew extends JDialog {
         //---- label4 ----
         label4.setText("Department");
         contentPane.add(label4, CC.xywh(2, 11, 2, 1, CC.RIGHT, CC.DEFAULT));
+
+        //---- comboBox1 ----
+        comboBox1.addItemListener(e -> departmentItemStateChanged(e));
         contentPane.add(comboBox1, CC.xywh(5, 11, 3, 1));
 
         //---- label11 ----
@@ -301,7 +312,7 @@ public class EmployeeNew extends JDialog {
     private JLabel label8;
     private JXDatePicker textField4;
     private JLabel label4;
-    private JComboBox comboBox1;
+    private JComboBox<com.chulabhornhospital.employee.domain.Department> comboBox1;
     private JLabel label11;
     private JLabel label12;
     private JLabel label9;
