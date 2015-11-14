@@ -91,7 +91,6 @@ public class EmployeeNew extends JDialog {
     }
 
     public void setDepartments(List<Department> departments) {
-        List<Department> old = this.departments;
         this.departments = departments;
         firePropertyChange("departments", null, departments);
     }
@@ -100,6 +99,15 @@ public class EmployeeNew extends JDialog {
         Department department = (Department) e.getItem();
         employee.setDepartmentId(department.getId());
         firePropertyChange("employee", null, employee);
+    }
+
+    private void btnDeleteActionPerformed(ActionEvent e) {
+        try {
+            controller.delete(employee);
+            this.dispose();
+        } catch (Throwable throwable) {
+            JOptionPane.showMessageDialog(this, throwable.getMessage());
+        }
     }
 
     private void initComponents() {
@@ -275,6 +283,7 @@ public class EmployeeNew extends JDialog {
         button4.setText("Delete");
         button4.setPreferredSize(new Dimension(28, 23));
         button4.setBackground(new Color(255, 102, 102));
+        button4.addActionListener(e -> btnDeleteActionPerformed(e));
         contentPane.add(button4, CC.xy(13, 21));
         pack();
         setLocationRelativeTo(null);

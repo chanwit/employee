@@ -270,6 +270,7 @@ new FormModel {
 				"text": "Delete"
 				"preferredSize": new java.awt.Dimension( 28, 23 )
 				"background": new java.awt.Color( 255, 102, 102, 255 )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnDeleteActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 13
 				"gridY": 21

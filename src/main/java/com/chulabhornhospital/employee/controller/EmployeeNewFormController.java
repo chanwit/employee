@@ -44,4 +44,11 @@ public class EmployeeNewFormController {
             return em.updateByPrimaryKeySelective(employee);
         });
     }
+
+    public int delete(Employee employee) throws Throwable {
+        return withUpdate(session -> {
+            EmployeeMapper em = session.getMapper(EmployeeMapper.class);
+            return em.deleteByPrimaryKey(employee.getId());
+        });
+    }
 }
