@@ -30,7 +30,7 @@ public interface EmployeeListMapper {
             @Result(column="NICK_NAME", property="nickName", jdbcType=JdbcType.VARCHAR),
             @Result(column="BEING_HIRED", property="beingHired", jdbcType=JdbcType.BOOLEAN)
     })
-    List<Employee> selectListLimit(@Param("limit") Long limit);
+    List<Employee> list(@Param("limit") Long limit);
 
     @Select({
             "select",
