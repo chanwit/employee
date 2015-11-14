@@ -11,7 +11,7 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.table.*;
 
-import com.chulabhornhospital.employee.controller.EmployeeController;
+import com.chulabhornhospital.employee.controller.EmployeeListFormController;
 import com.chulabhornhospital.employee.domain.Employee;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
@@ -26,11 +26,11 @@ public class EmployeeList extends JFrame {
 
     private static final String SEARCH_PLACE_HOLDER = "Search ...";
     private EmployeeNew newForm;
-    private EmployeeController controller;
+    private EmployeeListFormController controller;
 
     public EmployeeList() {
         initComponents();
-        controller = new EmployeeController(this);
+        controller = new EmployeeListFormController(this);
         try {
             controller.listEmployees();
         } catch (Throwable e) {
