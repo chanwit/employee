@@ -25,7 +25,6 @@ import org.jdesktop.swingbinding.*;
 public class EmployeeList extends JFrame {
 
     private static final String SEARCH_PLACE_HOLDER = "Search ...";
-    private EmployeeNew newForm;
     private EmployeeListFormController controller;
 
     public EmployeeList() {
@@ -33,6 +32,7 @@ public class EmployeeList extends JFrame {
         controller = new EmployeeListFormController(this);
         try {
             controller.listEmployees();
+            tbEmployee.removeColumn(tbEmployee.getColumnModel().getColumn(0));
         } catch (Throwable e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, e.getMessage());
@@ -41,7 +41,7 @@ public class EmployeeList extends JFrame {
     }
 
     private void btnNewActionPerformed(ActionEvent e) {
-        newForm = new EmployeeNew();
+        EmployeeNew newForm = new EmployeeNew();
         newForm.pack();
         newForm.setVisible(true);
     }
@@ -77,6 +77,23 @@ public class EmployeeList extends JFrame {
 
     public List<com.chulabhornhospital.employee.domain.Employee> getEmployees() {
         return employees;
+    }
+
+    private void tbEmployeeMousePressed(MouseEvent event) {
+        JTable table =(JTable) event.getSource();
+        Point p = event.getPoint();
+        int row = table.rowAtPoint(p);
+        if (event.getClickCount() == 2 && row >= 0) {
+            Long id = (Long) tbEmployee.getModel().getValueAt(row, 0);
+            EmployeeNew newForm = new EmployeeNew();
+            try {
+                newForm.setEmployee(controller.get(id));
+                newForm.pack();
+                newForm.setVisible(true);
+            } catch (Throwable throwable) {
+                JOptionPane.showMessageDialog(this, throwable.getMessage());
+            }
+        }
     }
 
     private void initComponents() {
@@ -125,6 +142,12 @@ public class EmployeeList extends JFrame {
 
             //---- tbEmployee ----
             tbEmployee.setModel(new DefaultTableModel());
+            tbEmployee.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    tbEmployeeMousePressed(e);
+                }
+            });
             scrollPane1.setViewportView(tbEmployee);
         }
         contentPane.add(scrollPane1, CC.xywh(2, 7, 12, 1));
@@ -142,6 +165,10 @@ public class EmployeeList extends JFrame {
             JTableBinding binding = SwingBindings.createJTableBinding(UpdateStrategy.READ,
                 this, (BeanProperty) BeanProperty.create("employees"), tbEmployee);
             binding.setEditable(false);
+            binding.addColumnBinding(BeanProperty.create("id"))
+                .setColumnName("Id")
+                .setColumnClass(Long.class)
+                .setEditable(false);
             binding.addColumnBinding(ELProperty.create("${firstName} ${lastName}"))
                 .setColumnName("Name")
                 .setColumnClass(String.class)
