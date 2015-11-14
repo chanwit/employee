@@ -25,7 +25,7 @@ import org.jdesktop.swingbinding.*;
 public class EmployeeList extends JFrame {
 
     private static final String SEARCH_PLACE_HOLDER = "Search ...";
-    private EmployeeNew employeeNew;
+    private EmployeeNew newForm;
     private EmployeeController controller;
 
     public EmployeeList() {
@@ -41,9 +41,9 @@ public class EmployeeList extends JFrame {
     }
 
     private void btnNewActionPerformed(ActionEvent e) {
-        employeeNew = new EmployeeNew();
-        employeeNew.pack();
-        employeeNew.setVisible(true);
+        newForm = new EmployeeNew();
+        newForm.pack();
+        newForm.setVisible(true);
     }
 
     private void txtSearchKeyPressed(KeyEvent e) {
