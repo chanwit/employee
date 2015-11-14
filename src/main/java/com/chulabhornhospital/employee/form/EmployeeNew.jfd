@@ -237,7 +237,7 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JCheckBox" ) {
 				name: "checkBox1"
-				"text": "Not Hired"
+				"text": "Being Hired"
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 11
 				"gridY": 17
@@ -311,6 +311,13 @@ new FormModel {
 			addBinding( new FormBinding( "this", "employee.dob", "textField4", "date" ) )
 			addBinding( new FormBinding( "this", "departments", "comboBox1", "elements" ) {
 				"updateStrategy": enum org.jdesktop.beansbinding.AutoBinding$UpdateStrategy READ
+			} )
+			addBinding( new FormBinding( "this", "employee.age", "label12", "text" ) )
+			addBinding( new FormBinding( "this", "employee.salary", "textField5", "text" ) )
+			addBinding( new FormBinding( "this", "employee.nickName", "textField2", "text" ) )
+			addBinding( new FormBinding( "this", "employee.beingHired", "checkBox1", "selected" ) {
+				"sourceNullValue": false
+				"sourceUnreadableValue": false
 			} )
 		} )
 	}

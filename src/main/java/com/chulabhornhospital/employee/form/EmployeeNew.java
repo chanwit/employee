@@ -45,6 +45,7 @@ public class EmployeeNew extends JDialog {
         emptyEmployee.setDob(new Date());
         emptyEmployee.setBeingHired(false);
         emptyEmployee.setGender(true);
+        emptyEmployee.setBeingHired(false);
         setEmployee(emptyEmployee);
     }
 
@@ -238,7 +239,7 @@ public class EmployeeNew extends JDialog {
         contentPane.add(textField2, CC.xywh(5, 17, 3, 1));
 
         //---- checkBox1 ----
-        checkBox1.setText("Not Hired");
+        checkBox1.setText("Being Hired");
         contentPane.add(checkBox1, CC.xywh(11, 17, 2, 1));
 
         //---- button2 ----
@@ -293,6 +294,23 @@ public class EmployeeNew extends JDialog {
             textField4, BeanProperty.create("date")));
         bindingGroup.addBinding(SwingBindings.createJComboBoxBinding(UpdateStrategy.READ,
             this, (BeanProperty) BeanProperty.create("departments"), comboBox1));
+        bindingGroup.addBinding(Bindings.createAutoBinding(UpdateStrategy.READ_WRITE,
+            this, BeanProperty.create("employee.age"),
+            label12, BeanProperty.create("text")));
+        bindingGroup.addBinding(Bindings.createAutoBinding(UpdateStrategy.READ_WRITE,
+            this, BeanProperty.create("employee.salary"),
+            textField5, BeanProperty.create("text")));
+        bindingGroup.addBinding(Bindings.createAutoBinding(UpdateStrategy.READ_WRITE,
+            this, BeanProperty.create("employee.nickName"),
+            textField2, BeanProperty.create("text")));
+        {
+            Binding binding = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE,
+                this, BeanProperty.create("employee.beingHired"),
+                checkBox1, BeanProperty.create("selected"));
+            binding.setSourceNullValue(false);
+            binding.setSourceUnreadableValue(false);
+            bindingGroup.addBinding(binding);
+        }
         bindingGroup.bind();
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
