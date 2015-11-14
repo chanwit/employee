@@ -34,11 +34,11 @@ public interface EmployeeMapper {
         "insert into PUBLIC.EMPLOYEE (ID, FIRST_NAME, ",
         "LAST_NAME, GENDER, ",
         "DOB, SALARY, NICK_NAME, ",
-        "BEING_HIRED)",
+        "BEING_HIRED, DEPARTMENT_ID)",
         "values (#{id,jdbcType=BIGINT}, #{firstName,jdbcType=VARCHAR}, ",
         "#{lastName,jdbcType=VARCHAR}, #{gender,jdbcType=BOOLEAN}, ",
         "#{dob,jdbcType=DATE}, #{salary,jdbcType=DECIMAL}, #{nickName,jdbcType=VARCHAR}, ",
-        "#{beingHired,jdbcType=BOOLEAN})"
+        "#{beingHired,jdbcType=BOOLEAN}, #{departmentId,jdbcType=BIGINT})"
     })
     int insert(Employee record);
 
@@ -59,7 +59,7 @@ public interface EmployeeMapper {
      */
     @Select({
         "select",
-        "ID, FIRST_NAME, LAST_NAME, GENDER, DOB, SALARY, NICK_NAME, BEING_HIRED",
+        "ID, FIRST_NAME, LAST_NAME, GENDER, DOB, SALARY, NICK_NAME, BEING_HIRED, DEPARTMENT_ID",
         "from PUBLIC.EMPLOYEE",
         "where ID = #{id,jdbcType=BIGINT}"
     })
@@ -71,7 +71,8 @@ public interface EmployeeMapper {
         @Result(column="DOB", property="dob", jdbcType=JdbcType.DATE),
         @Result(column="SALARY", property="salary", jdbcType=JdbcType.DECIMAL),
         @Result(column="NICK_NAME", property="nickName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="BEING_HIRED", property="beingHired", jdbcType=JdbcType.BOOLEAN)
+        @Result(column="BEING_HIRED", property="beingHired", jdbcType=JdbcType.BOOLEAN),
+        @Result(column="DEPARTMENT_ID", property="departmentId", jdbcType=JdbcType.BIGINT)
     })
     Employee selectByPrimaryKey(Long id);
 
@@ -98,7 +99,8 @@ public interface EmployeeMapper {
           "DOB = #{dob,jdbcType=DATE},",
           "SALARY = #{salary,jdbcType=DECIMAL},",
           "NICK_NAME = #{nickName,jdbcType=VARCHAR},",
-          "BEING_HIRED = #{beingHired,jdbcType=BOOLEAN}",
+          "BEING_HIRED = #{beingHired,jdbcType=BOOLEAN},",
+          "DEPARTMENT_ID = #{departmentId,jdbcType=BIGINT}",
         "where ID = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(Employee record);

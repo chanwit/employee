@@ -54,6 +54,10 @@ public class EmployeeSqlProvider {
             VALUES("BEING_HIRED", "#{beingHired,jdbcType=BOOLEAN}");
         }
         
+        if (record.getDepartmentId() != null) {
+            VALUES("DEPARTMENT_ID", "#{departmentId,jdbcType=BIGINT}");
+        }
+        
         return SQL();
     }
 
@@ -93,6 +97,10 @@ public class EmployeeSqlProvider {
         
         if (record.getBeingHired() != null) {
             SET("BEING_HIRED = #{beingHired,jdbcType=BOOLEAN}");
+        }
+        
+        if (record.getDepartmentId() != null) {
+            SET("DEPARTMENT_ID = #{departmentId,jdbcType=BIGINT}");
         }
         
         WHERE("ID = #{id,jdbcType=BIGINT}");
