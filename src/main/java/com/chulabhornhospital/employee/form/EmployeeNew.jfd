@@ -319,6 +319,11 @@ new FormModel {
 				"sourceNullValue": false
 				"sourceUnreadableValue": false
 			} )
+			addBinding( new FormBinding( "this", "employee.fullName", "label1", "text" ) {
+				"sourceNullValue": "New Employee"
+				"sourceUnreadableValue": "New Employee"
+				"updateStrategy": enum org.jdesktop.beansbinding.AutoBinding$UpdateStrategy READ
+			} )
 		} )
 	}
 }

@@ -311,6 +311,14 @@ public class EmployeeNew extends JDialog {
             binding.setSourceUnreadableValue(false);
             bindingGroup.addBinding(binding);
         }
+        {
+            Binding binding = Bindings.createAutoBinding(UpdateStrategy.READ,
+                this, BeanProperty.create("employee.fullName"),
+                label1, BeanProperty.create("text"));
+            binding.setSourceNullValue("New Employee");
+            binding.setSourceUnreadableValue("New Employee");
+            bindingGroup.addBinding(binding);
+        }
         bindingGroup.bind();
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
