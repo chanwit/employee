@@ -6,8 +6,12 @@ package com.chulabhornhospital.employee.form;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
+import java.util.function.BooleanSupplier;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -27,12 +31,32 @@ public class EmployeeList extends JFrame {
     private static final String SEARCH_PLACE_HOLDER = "Search ...";
     private EmployeeListFormController controller;
 
+    private ImageIcon check = new ImageIcon("src/main/resources/fa-check-circle_18_2_24ff00_none.png");
+    private ImageIcon cross = new ImageIcon("src/main/resources/fa-times-circle_18_2_ff0000_none.png");
+
     public EmployeeList() {
         initComponents();
         controller = new EmployeeListFormController(this);
         refreshData();
         tbEmployee.removeColumn(tbEmployee.getColumnModel().getColumn(0));
         tbEmployee.requestFocus();
+        System.out.println(tbEmployee.getDefaultRenderer(Boolean.class).getClass());
+
+        tbEmployee.setDefaultRenderer(Boolean.class, new DefaultTableCellRenderer() {
+            private JLabel label = new JLabel();
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+                Rectangle cell = table.getCellRect(row, col, false);
+                label.setHorizontalAlignment(JLabel.CENTER);
+                label.setSize(cell.getSize());
+                if(value.equals(Boolean.TRUE)) {
+                    label.setIcon(check);
+                } else {
+                    label.setIcon(cross);
+                }
+                return label;
+            }
+        });
     }
 
     private void refreshData() {
