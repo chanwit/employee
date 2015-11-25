@@ -4,11 +4,15 @@
 
 package com.chulabhornhospital.employee.form;
 
+import javax.swing.event.*;
+
+import com.chulabhornhospital.Validatable;
 import com.chulabhornhospital.employee.controller.EmployeeNewFormController;
 import com.chulabhornhospital.employee.domain.Department;
 import com.chulabhornhospital.employee.domain.Employee;
 import com.jgoodies.forms.factories.CC;
 import com.jgoodies.forms.layout.FormLayout;
+import org.jdesktop.beansbinding.*;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.Binding;
@@ -19,6 +23,7 @@ import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.validation.ConstraintViolation;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
@@ -26,6 +31,7 @@ import java.beans.PropertyChangeEvent;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Worajedt Sitthidumrong
@@ -36,7 +42,6 @@ public class EmployeeNew extends JDialog {
 
     public EmployeeNew() {
         initComponents();
-
         initEmployee();
         controller = new EmployeeNewFormController(this);
         try {
@@ -75,6 +80,16 @@ public class EmployeeNew extends JDialog {
     }
 
     private void btnSaveActionPerformed(ActionEvent ev) {
+        Set<ConstraintViolation<Employee>> errors = ((Validatable) this.employee).validate();
+        String errMsg ="";
+        for(ConstraintViolation<Employee> cv: errors) {
+            errMsg += String.format("Property '%s' %s.\n", cv.getPropertyPath(), cv.getMessage());
+        }
+        if(errors.isEmpty() == false) {
+            JOptionPane.showMessageDialog(this, errMsg);
+            return;
+        }
+
         try {
             if (this.employee.getId() == null) {
                 controller.insert(this.employee);
@@ -107,6 +122,16 @@ public class EmployeeNew extends JDialog {
             this.dispose();
         } catch (Throwable throwable) {
             JOptionPane.showMessageDialog(this, throwable.getMessage());
+        }
+    }
+
+    private void checkBox1StateChanged(ChangeEvent e) {
+        if(checkBox1.isSelected()) {
+            checkBox1.setForeground(Color.GREEN);
+            checkBox1.setText("Being Hired");
+        } else {
+            checkBox1.setForeground(Color.RED);
+            checkBox1.setText("Not Hired");
         }
     }
 
@@ -144,6 +169,7 @@ public class EmployeeNew extends JDialog {
         button3 = new JButton();
         button4 = new JButton();
         employee = new Employee();
+        colorConverter = new StringToColorConverter();
 
         //======== this ========
         setMinimumSize(new Dimension(800, 600));
@@ -261,7 +287,8 @@ public class EmployeeNew extends JDialog {
 
         //---- checkBox1 ----
         checkBox1.setText("Being Hired");
-        contentPane.add(checkBox1, CC.xywh(11, 17, 2, 1));
+        checkBox1.addChangeListener(e -> checkBox1StateChanged(e));
+        contentPane.add(checkBox1, CC.xy(11, 17));
 
         //---- button2 ----
         button2.setText("Save");
@@ -382,6 +409,7 @@ public class EmployeeNew extends JDialog {
     private JButton button4;
     private Employee employee;
     private List<com.chulabhornhospital.employee.domain.Department> departments;
+    private StringToColorConverter colorConverter;
     private BindingGroup bindingGroup;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
