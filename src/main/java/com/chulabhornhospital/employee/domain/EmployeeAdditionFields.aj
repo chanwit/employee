@@ -5,6 +5,9 @@ import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Administrator on 11/14/2015.
  */
@@ -38,5 +41,14 @@ public privileged aspect EmployeeAdditionFields {
         result.setId(this.getDepartmentId());
         return result;
     }
+
+    private List<Email> Employee.emails;
+    public List<Email> Employee.getEmails() {
+        return this.emails;
+    }
+    public void Employee.setEmails(List<Email> value) {
+        this.emails = value;
+    }
+
 
 }
