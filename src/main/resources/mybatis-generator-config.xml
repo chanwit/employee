@@ -53,6 +53,11 @@
                enableDeleteByExample="false"
                enableSelectByExample="false"
                enableUpdateByExample="false"/>
-
+        <table tableName="EMAIL"
+               schema="PUBLIC"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"/>
     </context>
 </generatorConfiguration>
