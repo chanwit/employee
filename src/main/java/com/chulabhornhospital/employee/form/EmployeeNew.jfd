@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-			"$columnSpecs": "unrelgap, unrelgap, default:grow, unrelgap, 16dlu:grow, 16dlu:grow, 16dlu:grow, unrelgap, default:grow, unrelgap, 16dlu:grow, 16dlu:grow, 16dlu:grow, unrelgap, default:grow, default:grow, unrelgap"
-			"$rowSpecs": "linegap, linegap, default, linegap, 16dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, top:default, linegap, default, linegap, 16dlu, linegap, default, linegap, default"
+			"$columnSpecs": "unrelgap, unrelgap, default:grow, unrelgap, 16dlu:grow, 16dlu:grow, labelcompgap, 16dlu:grow, unrelgap, default:grow, unrelgap, 16dlu:grow, 16dlu:grow, labelcompgap, 16dlu:grow, unrelgap, default:grow, default:grow, unrelgap"
+			"$rowSpecs": "linegap, linegap, default, linegap, 16dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, top:default, linegap, default, linegap, 16dlu, linegap, default, linegap, default"
 		} ) {
 			name: "this"
 			"minimumSize": new java.awt.Dimension( 800, 600 )
@@ -19,7 +19,7 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 2
 				"gridY": 3
-				"gridWidth": 6
+				"gridWidth": 7
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btnBack"
@@ -27,7 +27,7 @@ new FormModel {
 				"background": new java.awt.Color( 255, 102, 102, 255 )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnBackActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-				"gridX": 15
+				"gridX": 17
 				"gridY": 3
 				"gridWidth": 2
 			} )
@@ -45,13 +45,13 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 5
 				"gridY": 7
-				"gridWidth": 3
+				"gridWidth": 4
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label7"
 				"text": "Last Name"
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-				"gridX": 8
+				"gridX": 9
 				"gridY": 7
 				"gridWidth": 2
 				"hAlign": sfield com.jgoodies.forms.layout.CellConstraints RIGHT
@@ -59,9 +59,9 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "textField3"
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-				"gridX": 11
+				"gridX": 12
 				"gridY": 7
-				"gridWidth": 3
+				"gridWidth": 4
 			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
 				"$columnSpecs": "default:grow"
@@ -70,7 +70,7 @@ new FormModel {
 				name: "panel1"
 				"border": new javax.swing.border.LineBorder( sfield java.awt.Color black, 1, false )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-				"gridX": 15
+				"gridX": 17
 				"gridY": 7
 				"gridHeight": 8
 				"gridWidth": 2
@@ -109,13 +109,13 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 5
 				"gridY": 9
-				"gridWidth": 3
+				"gridWidth": 4
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label8"
 				"text": "DOB"
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-				"gridX": 8
+				"gridX": 9
 				"gridY": 9
 				"gridWidth": 2
 				"hAlign": sfield com.jgoodies.forms.layout.CellConstraints RIGHT
@@ -124,9 +124,9 @@ new FormModel {
 				name: "textField4"
 				addEvent( new FormEvent( "java.beans.PropertyChangeListener", "propertyChange", "textField4PropertyChange", true, "date" ) )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-				"gridX": 11
+				"gridX": 12
 				"gridY": 9
-				"gridWidth": 3
+				"gridWidth": 4
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label4"
@@ -146,13 +146,13 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 5
 				"gridY": 11
-				"gridWidth": 3
+				"gridWidth": 4
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label11"
 				"text": "Age"
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-				"gridX": 8
+				"gridX": 9
 				"gridY": 11
 				"gridWidth": 2
 				"hAlign": sfield com.jgoodies.forms.layout.CellConstraints RIGHT
@@ -161,15 +161,15 @@ new FormModel {
 				name: "label12"
 				"text": "text"
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-				"gridX": 11
+				"gridX": 12
 				"gridY": 11
-				"gridWidth": 3
+				"gridWidth": 4
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label9"
 				"text": "Salary"
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-				"gridX": 8
+				"gridX": 9
 				"gridY": 13
 				"gridWidth": 2
 				"hAlign": sfield com.jgoodies.forms.layout.CellConstraints RIGHT
@@ -177,18 +177,55 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "textField5"
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-				"gridX": 11
+				"gridX": 12
 				"gridY": 13
-				"gridWidth": 3
+				"gridWidth": 4
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label5"
 				"text": "Tel"
+				"horizontalAlignment": 4
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-				"gridX": 2
+				"gridX": 3
 				"gridY": 15
-				"hAlign": sfield com.jgoodies.forms.layout.CellConstraints RIGHT
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField6"
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 5
+				"gridY": 15
 				"gridWidth": 2
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button5"
+				"text": "+"
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 8
+				"gridY": 15
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label10"
+				"text": "Email"
+				"horizontalAlignment": 4
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 10
+				"gridY": 15
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button1"
+				"text": "+"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnAddEmailActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 12
+				"gridY": 15
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField7"
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "employeeEmailFocusLost", true ) )
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 13
+				"gridY": 15
+				"gridWidth": 3
 			} )
 			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 				name: "scrollPane2"
@@ -197,34 +234,28 @@ new FormModel {
 				} )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 5
-				"gridY": 15
-				"gridWidth": 3
-			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label10"
-				"text": "Email"
-			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-				"gridX": 8
-				"gridY": 15
-				"gridWidth": 2
-				"hAlign": sfield com.jgoodies.forms.layout.CellConstraints RIGHT
+				"gridY": 17
+				"gridWidth": 4
 			} )
 			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 				name: "scrollPane3"
 				add( new FormComponent( "javax.swing.JList" ) {
-					name: "list3"
+					name: "lstEmployeeEmails"
+					auxiliary() {
+						"JavaCodeGenerator.typeParameters": "com.chulabhornhospital.employee.domain.Email"
+					}
 				} )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-				"gridX": 11
-				"gridY": 15
-				"gridWidth": 3
+				"gridX": 12
+				"gridY": 17
+				"gridWidth": 4
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label6"
 				"text": "Nick Name"
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 2
-				"gridY": 17
+				"gridY": 19
 				"hAlign": sfield com.jgoodies.forms.layout.CellConstraints RIGHT
 				"gridWidth": 2
 			} )
@@ -232,16 +263,17 @@ new FormModel {
 				name: "textField2"
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 5
-				"gridY": 17
-				"gridWidth": 3
+				"gridY": 19
+				"gridWidth": 4
 			} )
 			add( new FormComponent( "javax.swing.JCheckBox" ) {
 				name: "checkBox1"
 				"text": "Being Hired"
 				addEvent( new FormEvent( "javax.swing.event.ChangeListener", "stateChanged", "checkBox1StateChanged", true ) )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-				"gridX": 11
-				"gridY": 17
+				"gridX": 12
+				"gridY": 19
+				"gridWidth": 2
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button2"
@@ -253,7 +285,7 @@ new FormModel {
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnSaveActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 5
-				"gridY": 21
+				"gridY": 23
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button3"
@@ -263,7 +295,7 @@ new FormModel {
 				"maximumSize": new java.awt.Dimension( 28, 23 )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 6
-				"gridY": 21
+				"gridY": 23
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button4"
@@ -272,8 +304,8 @@ new FormModel {
 				"background": new java.awt.Color( 255, 102, 102, 255 )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnDeleteActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-				"gridX": 13
-				"gridY": 21
+				"gridX": 15
+				"gridY": 23
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
@@ -310,6 +342,15 @@ new FormModel {
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 130, 500 )
 		} )
+		add( new FormNonVisual( "java.util.List" ) {
+			name: "employeeEmails"
+			auxiliary() {
+				"JavaCodeGenerator.typeParameters": "com.chulabhornhospital.employee.domain.Email"
+				"JavaCodeGenerator.variableGetter": true
+			}
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 235, 470 )
+		} )
 		addBindingGroup( new FormBindingGroup( class org.jdesktop.beansbinding.BindingGroup ) {
 			"name": "bindingGroup"
 			addBinding( new FormBinding( "this", "employee.firstName", "textField1", "text" ) {
@@ -334,6 +375,8 @@ new FormModel {
 				"updateStrategy": enum org.jdesktop.beansbinding.AutoBinding$UpdateStrategy READ
 			} )
 			addBinding( new FormBinding( "this", "employee.department", "comboBox1", "selectedItem" ) )
+			addBinding( new FormBinding( "this", "employeeEmails", "lstEmployeeEmails", "elements" ) )
+			addBinding( new FormBinding( "lstEmployeeEmails", "selectedElement.emailAddress", "textField7", "text" ) )
 		} )
 	}
 }
