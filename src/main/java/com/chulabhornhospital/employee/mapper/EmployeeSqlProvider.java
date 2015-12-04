@@ -58,6 +58,10 @@ public class EmployeeSqlProvider {
             VALUES("DEPARTMENT_ID", "#{departmentId,jdbcType=BIGINT}");
         }
         
+        if (record.getImageData() != null) {
+            VALUES("IMAGE_DATA", "#{imageData,jdbcType=BLOB}");
+        }
+        
         return SQL();
     }
 
@@ -101,6 +105,10 @@ public class EmployeeSqlProvider {
         
         if (record.getDepartmentId() != null) {
             SET("DEPARTMENT_ID = #{departmentId,jdbcType=BIGINT}");
+        }
+        
+        if (record.getImageData() != null) {
+            SET("IMAGE_DATA = #{imageData,jdbcType=BLOB}");
         }
         
         WHERE("ID = #{id,jdbcType=BIGINT}");

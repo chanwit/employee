@@ -16,7 +16,8 @@ public interface EmployeeListMapper {
 
     @Select({
             "select",
-            "ID, FIRST_NAME, LAST_NAME, GENDER, DOB, SALARY, NICK_NAME, BEING_HIRED",
+            "ID, FIRST_NAME, LAST_NAME, GENDER, DOB, SALARY, NICK_NAME, BEING_HIRED, DEPARTMENT_ID, ",
+            "IMAGE_DATA",
             "from PUBLIC.EMPLOYEE",
             "limit #{limit}"
     })
@@ -24,11 +25,13 @@ public interface EmployeeListMapper {
             @Result(column="ID", property="id", jdbcType=JdbcType.BIGINT, id=true),
             @Result(column="FIRST_NAME", property="firstName", jdbcType=JdbcType.VARCHAR),
             @Result(column="LAST_NAME", property="lastName", jdbcType=JdbcType.VARCHAR),
-            @Result(column="GENDER", property="gender", jdbcType=JdbcType.VARCHAR),
+            @Result(column="GENDER", property="gender", jdbcType=JdbcType.BOOLEAN),
             @Result(column="DOB", property="dob", jdbcType=JdbcType.DATE),
             @Result(column="SALARY", property="salary", jdbcType=JdbcType.DECIMAL),
             @Result(column="NICK_NAME", property="nickName", jdbcType=JdbcType.VARCHAR),
-            @Result(column="BEING_HIRED", property="beingHired", jdbcType=JdbcType.BOOLEAN)
+            @Result(column="BEING_HIRED", property="beingHired", jdbcType=JdbcType.BOOLEAN),
+            @Result(column="DEPARTMENT_ID", property="departmentId", jdbcType=JdbcType.BIGINT),
+            @Result(column="IMAGE_DATA", property="imageData", jdbcType=JdbcType.BLOB)
     })
     List<Employee> list(@Param("limit") Long limit);
 
