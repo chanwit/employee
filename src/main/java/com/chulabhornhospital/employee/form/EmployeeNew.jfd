@@ -357,6 +357,14 @@ new FormModel {
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 140, 495 )
 		} )
+		add( new FormNonVisual( "java.util.List" ) {
+			name: "employeeTels"
+			auxiliary() {
+				"JavaCodeGenerator.typeParameters": "com.chulabhornhospital.employee.domain.Telephone"
+			}
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 250, 500 )
+		} )
 		addBindingGroup( new FormBindingGroup( class org.jdesktop.beansbinding.BindingGroup ) {
 			"name": "bindingGroup"
 			addBinding( new FormBinding( "this", "employee.firstName", "textField1", "text" ) {

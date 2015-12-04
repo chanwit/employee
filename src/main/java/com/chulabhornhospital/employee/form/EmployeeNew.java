@@ -519,6 +519,7 @@ public class EmployeeNew extends JDialog {
     private Employee employee;
     private List<com.chulabhornhospital.employee.domain.Department> departments;
     private List<com.chulabhornhospital.employee.domain.Email> employeeEmails;
+    private List<com.chulabhornhospital.employee.domain.Telephone> employeeTels;
     private BindingGroup bindingGroup;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
