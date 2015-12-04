@@ -102,4 +102,17 @@ public class EmployeeNewFormController {
             form.setEmployeeEmails(emails);
         });
     }
+
+    public void deleteEmail(Email email) throws Throwable {
+        Long employeeId = email.getEmployeeId();
+        int result = withUpdate(session -> {
+            EmailMapper em = session.getMapper(EmailMapper.class);
+            return em.deleteByPrimaryKey(email.getId());
+        });
+        if (result > 0) {
+            Employee employee = new Employee();
+            employee.setId(employeeId);
+            listEmailsByEmployee(employee);
+        }
+    }
 }

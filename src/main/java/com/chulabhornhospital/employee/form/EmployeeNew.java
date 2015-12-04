@@ -183,6 +183,17 @@ public class EmployeeNew extends JDialog {
         addEmail();
     }
 
+    private void button6ActionPerformed(ActionEvent e) {
+        Email emailToDelete = lstEmployeeEmails.getSelectedValue();
+        if(emailToDelete != null) {
+            try {
+                controller.deleteEmail(emailToDelete);
+            } catch (Throwable throwable) {
+                JOptionPane.showMessageDialog(this, throwable.getMessage());
+            }
+        }
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         label1 = new JLabel();
@@ -205,10 +216,12 @@ public class EmployeeNew extends JDialog {
         label9 = new JLabel();
         textField5 = new JTextField();
         label5 = new JLabel();
-        textField6 = new JTextField();
         button5 = new JButton();
+        textField6 = new JTextField();
         label10 = new JLabel();
+        panel3 = new JPanel();
         button1 = new JButton();
+        button6 = new JButton();
         textField7 = new JTextField();
         scrollPane2 = new JScrollPane();
         list2 = new JList();
@@ -221,7 +234,6 @@ public class EmployeeNew extends JDialog {
         button3 = new JButton();
         button4 = new JButton();
         employee = new Employee();
-        colorConverter = new StringToColorConverter();
 
         //======== this ========
         setMinimumSize(new Dimension(800, 600));
@@ -229,7 +241,7 @@ public class EmployeeNew extends JDialog {
         setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
         Container contentPane = getContentPane();
         contentPane.setLayout(new FormLayout(
-            "2*($ugap), default:grow, $ugap, 2*(16dlu:grow), $lcgap, 16dlu:grow, $ugap, default:grow, $ugap, 2*(16dlu:grow), $lcgap, 16dlu:grow, $ugap, 2*(default:grow), $ugap",
+            "2*($ugap), default:grow, $ugap, 20dlu:grow, $lcgap, 2*(16dlu:grow), $ugap, default:grow, $ugap, 20dlu:grow, $rgap, 2*(16dlu:grow), $ugap, 2*(default:grow), $ugap",
             "2*($lgap), default, $lgap, 16dlu, 5*($lgap, default), $lgap, top:default, $lgap, default, $lgap, 16dlu, 2*($lgap, default)"));
 
         //---- label1 ----
@@ -316,21 +328,34 @@ public class EmployeeNew extends JDialog {
         label5.setText("Tel");
         label5.setHorizontalAlignment(SwingConstants.RIGHT);
         contentPane.add(label5, CC.xy(3, 15));
-        contentPane.add(textField6, CC.xywh(5, 15, 2, 1));
 
         //---- button5 ----
         button5.setText("+");
-        contentPane.add(button5, CC.xy(8, 15));
+        contentPane.add(button5, CC.xy(5, 15));
+        contentPane.add(textField6, CC.xywh(7, 15, 2, 1));
 
         //---- label10 ----
         label10.setText("Email");
         label10.setHorizontalAlignment(SwingConstants.RIGHT);
         contentPane.add(label10, CC.xy(10, 15));
 
-        //---- button1 ----
-        button1.setText("+");
-        button1.addActionListener(e -> btnAddEmailActionPerformed(e));
-        contentPane.add(button1, CC.xy(12, 15));
+        //======== panel3 ========
+        {
+            panel3.setLayout(new FormLayout(
+                "default:grow, pref:grow",
+                "default"));
+
+            //---- button1 ----
+            button1.setText("+");
+            button1.addActionListener(e -> btnAddEmailActionPerformed(e));
+            panel3.add(button1, CC.xy(1, 1));
+
+            //---- button6 ----
+            button6.setText("-");
+            button6.addActionListener(e -> button6ActionPerformed(e));
+            panel3.add(button6, CC.xy(2, 1));
+        }
+        contentPane.add(panel3, CC.xy(12, 15));
 
         //---- textField7 ----
         textField7.addFocusListener(new FocusAdapter() {
@@ -339,7 +364,7 @@ public class EmployeeNew extends JDialog {
                 employeeEmailFocusLost(e);
             }
         });
-        contentPane.add(textField7, CC.xywh(13, 15, 3, 1));
+        contentPane.add(textField7, CC.xywh(14, 15, 2, 1));
 
         //======== scrollPane2 ========
         {
@@ -361,7 +386,7 @@ public class EmployeeNew extends JDialog {
         //---- checkBox1 ----
         checkBox1.setText("Being Hired");
         checkBox1.addChangeListener(e -> checkBox1StateChanged(e));
-        contentPane.add(checkBox1, CC.xywh(12, 19, 2, 1));
+        contentPane.add(checkBox1, CC.xywh(12, 19, 3, 1));
 
         //---- button2 ----
         button2.setText("Save");
@@ -377,7 +402,7 @@ public class EmployeeNew extends JDialog {
         button3.setPreferredSize(new Dimension(28, 23));
         button3.setMinimumSize(new Dimension(28, 23));
         button3.setMaximumSize(new Dimension(28, 23));
-        contentPane.add(button3, CC.xy(6, 23));
+        contentPane.add(button3, CC.xy(7, 23));
 
         //---- button4 ----
         button4.setText("Delete");
@@ -474,10 +499,12 @@ public class EmployeeNew extends JDialog {
     private JLabel label9;
     private JTextField textField5;
     private JLabel label5;
-    private JTextField textField6;
     private JButton button5;
+    private JTextField textField6;
     private JLabel label10;
+    private JPanel panel3;
     private JButton button1;
+    private JButton button6;
     private JTextField textField7;
     private JScrollPane scrollPane2;
     private JList list2;
@@ -491,7 +518,6 @@ public class EmployeeNew extends JDialog {
     private JButton button4;
     private Employee employee;
     private List<com.chulabhornhospital.employee.domain.Department> departments;
-    private StringToColorConverter colorConverter;
     private List<com.chulabhornhospital.employee.domain.Email> employeeEmails;
     private BindingGroup bindingGroup;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
