@@ -1,7 +1,5 @@
 package com.chulabhornhospital.employee.domain;
 
-import com.chulabhornhospital.employee.mapper.custom.EmailListMapper;
-
 public privileged aspect EmailAdditionFields {
 
     private boolean Email.dirty = false;
@@ -10,7 +8,7 @@ public privileged aspect EmailAdditionFields {
         this.dirty = value;
     }
 
-    public boolean Email.getDirty() {
+    public boolean Email.isDirty() {
         return this.dirty;
     }
 
