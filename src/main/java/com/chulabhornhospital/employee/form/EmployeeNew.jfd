@@ -189,15 +189,31 @@ new FormModel {
 				"gridX": 3
 				"gridY": 15
 			} )
-			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "button5"
-				"text": "+"
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
+				"$columnSpecs": "default:grow, default:grow"
+				"$rowSpecs": "default"
+			} ) {
+				name: "panel4"
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnAddTel"
+					"text": "+"
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnAddTelActionPerformed", true ) )
+				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnDelTel"
+					"text": "-"
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnDelTelActionPerformed", true ) )
+				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+					"gridX": 2
+					"gridY": 1
+				} )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 5
 				"gridY": 15
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "textField6"
+				name: "txtEmployeeTel"
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "txtEmployeeTelFocusLost", true ) )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 7
 				"gridY": 15
@@ -217,14 +233,14 @@ new FormModel {
 			} ) {
 				name: "panel3"
 				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "button1"
+					name: "btnAddEmail"
 					"text": "+"
 					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnAddEmailActionPerformed", true ) )
 				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) )
 				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "button6"
+					name: "btnDelEmail"
 					"text": "-"
-					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "button6ActionPerformed", true ) )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnDelEmailActionPerformed", true ) )
 				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 					"gridX": 2
 					"gridY": 1
@@ -234,8 +250,8 @@ new FormModel {
 				"gridY": 15
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "textField7"
-				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "employeeEmailFocusLost", true ) )
+				name: "txtEmployeeEmail"
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "txtEmployeeEmailFocusLost", true ) )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 14
 				"gridY": 15
@@ -244,7 +260,10 @@ new FormModel {
 			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 				name: "scrollPane2"
 				add( new FormComponent( "javax.swing.JList" ) {
-					name: "list2"
+					name: "lstEmployeeTels"
+					auxiliary() {
+						"JavaCodeGenerator.typeParameters": "com.chulabhornhospital.employee.domain.Telephone"
+					}
 				} )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 5
@@ -361,6 +380,7 @@ new FormModel {
 			name: "employeeTels"
 			auxiliary() {
 				"JavaCodeGenerator.typeParameters": "com.chulabhornhospital.employee.domain.Telephone"
+				"JavaCodeGenerator.variableGetter": true
 			}
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 250, 500 )
@@ -390,7 +410,9 @@ new FormModel {
 			} )
 			addBinding( new FormBinding( "this", "employee.department", "comboBox1", "selectedItem" ) )
 			addBinding( new FormBinding( "this", "employeeEmails", "lstEmployeeEmails", "elements" ) )
-			addBinding( new FormBinding( "lstEmployeeEmails", "selectedElement.emailAddress", "textField7", "text" ) )
+			addBinding( new FormBinding( "lstEmployeeEmails", "selectedElement.emailAddress", "txtEmployeeEmail", "text" ) )
+			addBinding( new FormBinding( "this", "employeeTels", "lstEmployeeTels", "elements" ) )
+			addBinding( new FormBinding( "lstEmployeeTels", "selectedElement.telNumber", "txtEmployeeTel", "text" ) )
 		} )
 	}
 }

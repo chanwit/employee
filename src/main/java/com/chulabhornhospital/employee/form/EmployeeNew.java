@@ -12,6 +12,7 @@ import com.chulabhornhospital.employee.controller.EmployeeNewFormController;
 import com.chulabhornhospital.employee.domain.Department;
 import com.chulabhornhospital.employee.domain.Email;
 import com.chulabhornhospital.employee.domain.Employee;
+import com.chulabhornhospital.employee.domain.Telephone;
 import com.jgoodies.forms.factories.CC;
 import com.jgoodies.forms.layout.FormLayout;
 import org.jdesktop.beansbinding.*;
@@ -77,6 +78,7 @@ public class EmployeeNew extends JDialog {
         this.employee = value;
         try {
             controller.listEmailsByEmployee(getEmployee());
+            controller.listTelsByEmployee(getEmployee());
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
@@ -87,6 +89,12 @@ public class EmployeeNew extends JDialog {
         List<Email> old = this.employeeEmails;
         this.employeeEmails = employeeEmails;
         firePropertyChange("employeeEmails", old, this.employeeEmails);
+    }
+
+    public void setEmployeeTels(List<Telephone> employeeTels) {
+        List<Telephone> old = this.employeeTels;
+        this.employeeTels = employeeTels;
+        firePropertyChange("employeeTels", old, this.employeeTels);
     }
 
     private void textField4PropertyChange(PropertyChangeEvent e) {
@@ -105,6 +113,7 @@ public class EmployeeNew extends JDialog {
         }
 
         this.employee.setEmails(employeeEmails);
+        this.employee.setTelephones(employeeTels);
         try {
             if (this.employee.getId() == null) {
                 controller.insert(this.employee);
@@ -154,7 +163,7 @@ public class EmployeeNew extends JDialog {
         return employeeEmails;
     }
 
-    private void employeeEmailFocusLost(FocusEvent e) {
+    private void txtEmployeeEmailFocusLost(FocusEvent e) {
         List<Email> list = getEmployeeEmails();
         int index = lstEmployeeEmails.getSelectedIndex();
         setEmployeeEmails(null);
@@ -183,7 +192,7 @@ public class EmployeeNew extends JDialog {
         addEmail();
     }
 
-    private void button6ActionPerformed(ActionEvent e) {
+    private void btnDelEmailActionPerformed(ActionEvent e) {
         Email emailToDelete = lstEmployeeEmails.getSelectedValue();
         if(emailToDelete != null) {
             try {
@@ -193,6 +202,51 @@ public class EmployeeNew extends JDialog {
             }
         }
     }
+
+    public List<com.chulabhornhospital.employee.domain.Telephone> getEmployeeTels() {
+        return employeeTels;
+    }
+
+    private void addTel() {
+        Telephone telephone = new Telephone();
+        telephone.setId(0L);
+        telephone.setDirty(true);
+        telephone.setTelNumber("0800000000");
+        telephone.setEmployeeId(this.employee.getId());
+
+        List<Telephone> list = employeeTels;
+        if(employeeTels == null) {
+            list = new ArrayList<Telephone>();
+        }
+        list.add(telephone);
+        setEmployeeTels(null);
+        setEmployeeTels(list);
+        lstEmployeeTels.setSelectedIndex(employeeTels.size()-1);
+    }
+
+    private void btnAddTelActionPerformed(ActionEvent e) {
+        addTel();
+    }
+
+    private void txtEmployeeTelFocusLost(FocusEvent e) {
+        List<Telephone> list = getEmployeeTels();
+        int index = lstEmployeeTels.getSelectedIndex();
+        setEmployeeTels(null);
+        setEmployeeTels(list);
+        lstEmployeeTels.setSelectedIndex(index);
+    }
+
+    private void btnDelTelActionPerformed(ActionEvent e) {
+        Telephone telToDelete = lstEmployeeTels.getSelectedValue();
+        if(telToDelete != null) {
+            try {
+                controller.deleteTel(telToDelete);
+            } catch (Throwable throwable) {
+                JOptionPane.showMessageDialog(this, throwable.getMessage());
+            }
+        }
+    }
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -216,15 +270,17 @@ public class EmployeeNew extends JDialog {
         label9 = new JLabel();
         textField5 = new JTextField();
         label5 = new JLabel();
-        button5 = new JButton();
-        textField6 = new JTextField();
+        panel4 = new JPanel();
+        btnAddTel = new JButton();
+        btnDelTel = new JButton();
+        txtEmployeeTel = new JTextField();
         label10 = new JLabel();
         panel3 = new JPanel();
-        button1 = new JButton();
-        button6 = new JButton();
-        textField7 = new JTextField();
+        btnAddEmail = new JButton();
+        btnDelEmail = new JButton();
+        txtEmployeeEmail = new JTextField();
         scrollPane2 = new JScrollPane();
-        list2 = new JList();
+        lstEmployeeTels = new JList<>();
         scrollPane3 = new JScrollPane();
         lstEmployeeEmails = new JList<>();
         label6 = new JLabel();
@@ -329,10 +385,32 @@ public class EmployeeNew extends JDialog {
         label5.setHorizontalAlignment(SwingConstants.RIGHT);
         contentPane.add(label5, CC.xy(3, 15));
 
-        //---- button5 ----
-        button5.setText("+");
-        contentPane.add(button5, CC.xy(5, 15));
-        contentPane.add(textField6, CC.xywh(7, 15, 2, 1));
+        //======== panel4 ========
+        {
+            panel4.setLayout(new FormLayout(
+                "2*(default:grow)",
+                "default"));
+
+            //---- btnAddTel ----
+            btnAddTel.setText("+");
+            btnAddTel.addActionListener(e -> btnAddTelActionPerformed(e));
+            panel4.add(btnAddTel, CC.xy(1, 1));
+
+            //---- btnDelTel ----
+            btnDelTel.setText("-");
+            btnDelTel.addActionListener(e -> btnDelTelActionPerformed(e));
+            panel4.add(btnDelTel, CC.xy(2, 1));
+        }
+        contentPane.add(panel4, CC.xy(5, 15));
+
+        //---- txtEmployeeTel ----
+        txtEmployeeTel.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                txtEmployeeTelFocusLost(e);
+            }
+        });
+        contentPane.add(txtEmployeeTel, CC.xywh(7, 15, 2, 1));
 
         //---- label10 ----
         label10.setText("Email");
@@ -345,30 +423,30 @@ public class EmployeeNew extends JDialog {
                 "default:grow, pref:grow",
                 "default"));
 
-            //---- button1 ----
-            button1.setText("+");
-            button1.addActionListener(e -> btnAddEmailActionPerformed(e));
-            panel3.add(button1, CC.xy(1, 1));
+            //---- btnAddEmail ----
+            btnAddEmail.setText("+");
+            btnAddEmail.addActionListener(e -> btnAddEmailActionPerformed(e));
+            panel3.add(btnAddEmail, CC.xy(1, 1));
 
-            //---- button6 ----
-            button6.setText("-");
-            button6.addActionListener(e -> button6ActionPerformed(e));
-            panel3.add(button6, CC.xy(2, 1));
+            //---- btnDelEmail ----
+            btnDelEmail.setText("-");
+            btnDelEmail.addActionListener(e -> btnDelEmailActionPerformed(e));
+            panel3.add(btnDelEmail, CC.xy(2, 1));
         }
         contentPane.add(panel3, CC.xy(12, 15));
 
-        //---- textField7 ----
-        textField7.addFocusListener(new FocusAdapter() {
+        //---- txtEmployeeEmail ----
+        txtEmployeeEmail.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                employeeEmailFocusLost(e);
+                txtEmployeeEmailFocusLost(e);
             }
         });
-        contentPane.add(textField7, CC.xywh(14, 15, 2, 1));
+        contentPane.add(txtEmployeeEmail, CC.xywh(14, 15, 2, 1));
 
         //======== scrollPane2 ========
         {
-            scrollPane2.setViewportView(list2);
+            scrollPane2.setViewportView(lstEmployeeTels);
         }
         contentPane.add(scrollPane2, CC.xywh(5, 17, 4, 1));
 
@@ -473,7 +551,12 @@ public class EmployeeNew extends JDialog {
             this, (BeanProperty) BeanProperty.create("employeeEmails"), lstEmployeeEmails));
         bindingGroup.addBinding(Bindings.createAutoBinding(UpdateStrategy.READ_WRITE,
             lstEmployeeEmails, BeanProperty.create("selectedElement.emailAddress"),
-            textField7, BeanProperty.create("text")));
+            txtEmployeeEmail, BeanProperty.create("text")));
+        bindingGroup.addBinding(SwingBindings.createJListBinding(UpdateStrategy.READ_WRITE,
+            this, (BeanProperty) BeanProperty.create("employeeTels"), lstEmployeeTels));
+        bindingGroup.addBinding(Bindings.createAutoBinding(UpdateStrategy.READ_WRITE,
+            lstEmployeeTels, BeanProperty.create("selectedElement.telNumber"),
+            txtEmployeeTel, BeanProperty.create("text")));
         bindingGroup.bind();
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
@@ -499,15 +582,17 @@ public class EmployeeNew extends JDialog {
     private JLabel label9;
     private JTextField textField5;
     private JLabel label5;
-    private JButton button5;
-    private JTextField textField6;
+    private JPanel panel4;
+    private JButton btnAddTel;
+    private JButton btnDelTel;
+    private JTextField txtEmployeeTel;
     private JLabel label10;
     private JPanel panel3;
-    private JButton button1;
-    private JButton button6;
-    private JTextField textField7;
+    private JButton btnAddEmail;
+    private JButton btnDelEmail;
+    private JTextField txtEmployeeEmail;
     private JScrollPane scrollPane2;
-    private JList list2;
+    private JList<com.chulabhornhospital.employee.domain.Telephone> lstEmployeeTels;
     private JScrollPane scrollPane3;
     private JList<com.chulabhornhospital.employee.domain.Email> lstEmployeeEmails;
     private JLabel label6;
