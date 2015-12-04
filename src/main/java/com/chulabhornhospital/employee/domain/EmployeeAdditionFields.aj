@@ -50,5 +50,14 @@ public privileged aspect EmployeeAdditionFields {
         this.emails = value;
     }
 
+    private List<Telephone> Employee.telephones;
+    public List<Telephone> Employee.getTelephones() {
+        return telephones;
+    }
+    public void Employee.setTelephones(List<Telephone> telephones) {
+        this.telephones = telephones;
+    }
+
+
 
 }
