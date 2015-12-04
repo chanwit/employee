@@ -69,6 +69,14 @@ new FormModel {
 			} ) {
 				name: "panel1"
 				"border": new javax.swing.border.LineBorder( sfield java.awt.Color black, 1, false )
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "pnlImageMouseClicked", true ) )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lblImage"
+					"requestFocusEnabled": false
+				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+					"gridX": 1
+					"gridY": 1
+				} )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 17
 				"gridY": 7

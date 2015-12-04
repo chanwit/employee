@@ -4,9 +4,6 @@
 
 package com.chulabhornhospital.employee.form;
 
-import java.awt.event.*;
-import javax.swing.event.*;
-
 import com.chulabhornhospital.Validatable;
 import com.chulabhornhospital.employee.controller.EmployeeNewFormController;
 import com.chulabhornhospital.employee.domain.Department;
@@ -15,7 +12,6 @@ import com.chulabhornhospital.employee.domain.Employee;
 import com.chulabhornhospital.employee.domain.Telephone;
 import com.jgoodies.forms.factories.CC;
 import com.jgoodies.forms.layout.FormLayout;
-import org.jdesktop.beansbinding.*;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.Binding;
@@ -24,13 +20,22 @@ import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.swingbinding.SwingBindings;
 import org.jdesktop.swingx.JXDatePicker;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.validation.ConstraintViolation;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.beans.PropertyChangeEvent;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -79,6 +84,9 @@ public class EmployeeNew extends JDialog {
         try {
             controller.listEmailsByEmployee(getEmployee());
             controller.listTelsByEmployee(getEmployee());
+            BufferedImage image = ImageIO.read(new ByteArrayInputStream(employee.getImageData()));
+            ImageIcon icon = new ImageIcon(image);
+            lblImage.setIcon(icon);
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
@@ -247,6 +255,36 @@ public class EmployeeNew extends JDialog {
         }
     }
 
+    private void pnlImageMouseClicked(MouseEvent e) {
+        if(e.getClickCount() == 2) {
+            JFileChooser jfc = new JFileChooser();
+            FileFilter imageFilter = new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes());
+            jfc.setFileFilter(imageFilter);
+            jfc.showOpenDialog(this);
+            File file = jfc.getSelectedFile();
+            if(file != null) {
+                try {
+                    BufferedImage image = ImageIO.read(file);
+                    Image scaledImage = image.getScaledInstance(100, 100, Image.SCALE_DEFAULT);
+                    ImageIcon icon = new ImageIcon(scaledImage);
+                    lblImage.setIcon(icon);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ImageIO.write(getRenderedImage(scaledImage), "png", baos);
+                    byte[] bytes = baos.toByteArray();
+                    employee.setImageData(bytes);
+                } catch (IOException e1) {
+                    JOptionPane.showMessageDialog(this, e1.getMessage());
+                }
+            }
+        }
+    }
+
+    private RenderedImage getRenderedImage(Image image) {
+        BufferedImage bImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+        Graphics2D bImageGraphics = bImage.createGraphics();
+        bImageGraphics.drawImage(image, null, null);
+        return bImage;
+    }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -257,6 +295,7 @@ public class EmployeeNew extends JDialog {
         label7 = new JLabel();
         textField3 = new JTextField();
         panel1 = new JPanel();
+        lblImage = new JLabel();
         label3 = new JLabel();
         panel2 = new JPanel();
         radioButton2 = new JRadioButton();
@@ -324,9 +363,19 @@ public class EmployeeNew extends JDialog {
         //======== panel1 ========
         {
             panel1.setBorder(LineBorder.createBlackLineBorder());
+            panel1.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    pnlImageMouseClicked(e);
+                }
+            });
             panel1.setLayout(new FormLayout(
                 "default:grow",
                 "default:grow"));
+
+            //---- lblImage ----
+            lblImage.setRequestFocusEnabled(false);
+            panel1.add(lblImage, CC.xy(1, 1));
         }
         contentPane.add(panel1, CC.xywh(17, 7, 2, 8));
 
@@ -569,6 +618,7 @@ public class EmployeeNew extends JDialog {
     private JLabel label7;
     private JTextField textField3;
     private JPanel panel1;
+    private JLabel lblImage;
     private JLabel label3;
     private JPanel panel2;
     private JRadioButton radioButton2;
