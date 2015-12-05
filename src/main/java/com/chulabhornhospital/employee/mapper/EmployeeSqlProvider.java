@@ -58,6 +58,10 @@ public class EmployeeSqlProvider {
             VALUES("DEPARTMENT_ID", "#{departmentId,jdbcType=BIGINT}");
         }
         
+        if (record.getVersion() != null) {
+            VALUES("VERSION", "#{version,jdbcType=BIGINT}");
+        }
+        
         if (record.getImageData() != null) {
             VALUES("IMAGE_DATA", "#{imageData,jdbcType=BLOB}");
         }
@@ -105,6 +109,10 @@ public class EmployeeSqlProvider {
         
         if (record.getDepartmentId() != null) {
             SET("DEPARTMENT_ID = #{departmentId,jdbcType=BIGINT}");
+        }
+        
+        if (record.getVersion() != null) {
+            SET("VERSION = #{version,jdbcType=BIGINT}");
         }
         
         if (record.getImageData() != null) {

@@ -35,12 +35,12 @@ public interface EmployeeMapper {
         "LAST_NAME, GENDER, ",
         "DOB, SALARY, NICK_NAME, ",
         "BEING_HIRED, DEPARTMENT_ID, ",
-        "IMAGE_DATA)",
+        "VERSION, IMAGE_DATA)",
         "values (#{id,jdbcType=BIGINT}, #{firstName,jdbcType=VARCHAR}, ",
         "#{lastName,jdbcType=VARCHAR}, #{gender,jdbcType=BOOLEAN}, ",
         "#{dob,jdbcType=DATE}, #{salary,jdbcType=DECIMAL}, #{nickName,jdbcType=VARCHAR}, ",
         "#{beingHired,jdbcType=BOOLEAN}, #{departmentId,jdbcType=BIGINT}, ",
-        "#{imageData,jdbcType=BLOB})"
+        "#{version,jdbcType=BIGINT}, #{imageData,jdbcType=BLOB})"
     })
     int insert(Employee record);
 
@@ -62,7 +62,7 @@ public interface EmployeeMapper {
     @Select({
         "select",
         "ID, FIRST_NAME, LAST_NAME, GENDER, DOB, SALARY, NICK_NAME, BEING_HIRED, DEPARTMENT_ID, ",
-        "IMAGE_DATA",
+        "VERSION, IMAGE_DATA",
         "from PUBLIC.EMPLOYEE",
         "where ID = #{id,jdbcType=BIGINT}"
     })
@@ -76,6 +76,7 @@ public interface EmployeeMapper {
         @Result(column="NICK_NAME", property="nickName", jdbcType=JdbcType.VARCHAR),
         @Result(column="BEING_HIRED", property="beingHired", jdbcType=JdbcType.BOOLEAN),
         @Result(column="DEPARTMENT_ID", property="departmentId", jdbcType=JdbcType.BIGINT),
+        @Result(column="VERSION", property="version", jdbcType=JdbcType.BIGINT),
         @Result(column="IMAGE_DATA", property="imageData", jdbcType=JdbcType.BLOB)
     })
     Employee selectByPrimaryKey(Long id);
@@ -105,6 +106,7 @@ public interface EmployeeMapper {
           "NICK_NAME = #{nickName,jdbcType=VARCHAR},",
           "BEING_HIRED = #{beingHired,jdbcType=BOOLEAN},",
           "DEPARTMENT_ID = #{departmentId,jdbcType=BIGINT},",
+          "VERSION = #{version,jdbcType=BIGINT},",
           "IMAGE_DATA = #{imageData,jdbcType=BLOB}",
         "where ID = #{id,jdbcType=BIGINT}"
     })
@@ -125,7 +127,8 @@ public interface EmployeeMapper {
           "SALARY = #{salary,jdbcType=DECIMAL},",
           "NICK_NAME = #{nickName,jdbcType=VARCHAR},",
           "BEING_HIRED = #{beingHired,jdbcType=BOOLEAN},",
-          "DEPARTMENT_ID = #{departmentId,jdbcType=BIGINT}",
+          "DEPARTMENT_ID = #{departmentId,jdbcType=BIGINT},",
+          "VERSION = #{version,jdbcType=BIGINT}",
         "where ID = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(Employee record);
