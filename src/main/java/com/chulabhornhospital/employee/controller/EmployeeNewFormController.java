@@ -10,6 +10,7 @@ import com.chulabhornhospital.employee.mapper.EmployeeMapper;
 import com.chulabhornhospital.employee.mapper.TelephoneMapper;
 import com.chulabhornhospital.employee.mapper.custom.DepartmentListMapper;
 import com.chulabhornhospital.employee.mapper.custom.EmailListMapper;
+import com.chulabhornhospital.employee.mapper.custom.EmployeeVersionMapper;
 import com.chulabhornhospital.employee.mapper.custom.TelListMapper;
 
 import java.util.List;
@@ -66,6 +67,15 @@ public class EmployeeNewFormController {
 
     public int update(Employee employee) throws Throwable {
         return withUpdate(session -> {
+
+            EmployeeVersionMapper evm = session.getMapper(EmployeeVersionMapper.class);
+            Long version = evm.getVersion(employee.getId());
+            if(version > employee.getVersion()) {
+                throw new Exception("This Employee has been updated by another user");
+            }
+
+            employee.setVersion(version + 1);
+
             int result = 0;
             EmployeeMapper em = session.getMapper(EmployeeMapper.class);
             result = em.updateByPrimaryKeySelective(employee);
